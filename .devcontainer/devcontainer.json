@@ -1,0 +1,13 @@
+{
+    "name": "Election Model",
+    "dockerFile": "./.devcontainer/Dockerfile",
+    "context": "..",
+    "appPort": [8000],
+    "settings": {
+        "python.defaultInterpreterPath": "/app/.venv/bin/python"
+    },
+    "extensions": [
+        "ms-python.python",
+        "ms-azuretools.vscode-docker"
+    ]
+}
