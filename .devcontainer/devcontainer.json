@@ -1,7 +1,7 @@
 {
     "name": "Election Model",
     "dockerFile": "./.devcontainer/Dockerfile",
-    "context": "..",
+    "context": ".",
     "appPort": [8000],
     "settings": {
         "python.defaultInterpreterPath": "/app/.venv/bin/python"
