@@ -1,6 +1,6 @@
 # Correrlo
-docker build -t election model .
-docker run --rm -it election-model
+docker-compose down -v
+docker rmi election-model_app
 
-# O usando docker-compose:
-docker-compose up --build
+**Usando la extension de devcontainers en VsCode:**
+1. Command Palette: Rebuild and Reopen in Container
