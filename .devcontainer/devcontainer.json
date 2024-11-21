@@ -1,0 +1,21 @@
+{
+    "name": "Election Model Development",
+    "dockerComposeFile": "../docker-compose.yml",
+    "service": "app",
+    "workspaceFolder": "/app",
+    "settings": {
+        "terminal.integrated.defaultProfile.linux": "bash",
+        "python.defaultInterpreterPath": "/home/jupyter/venv/bin/python",
+        "python.analysis.extraPaths": ["/app/src"],
+        "jupyter.jupyterServerType": "local"
+    },
+    "extensions": [
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "ms-toolsai.jupyter"
+    ],
+    "remoteUser": "jupyter",
+    "postCreateCommand": "pip install --user ipykernel && python -m ipykernel install --user --name=election_model --display-name \"Python (Election Model)\"",
+    "forwardPorts": [8888],
+    "overrideCommand": false
+}

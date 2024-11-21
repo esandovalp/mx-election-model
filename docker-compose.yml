@@ -1,10 +1,21 @@
-version: "3.8"
 services:
-    app:
-        build:
-            context: .
-            dockerfile: Dockerfile
-        container_name: election-model-container
-        command: ["python", "src/main.py"]
-        volumes:
-            - .:/app
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: election-model-container
+    ports:
+      - "8888:8888"
+    volumes:
+      - .:/app
+      - jupyter-home:/home/jupyter
+    environment:
+      - JUPYTER_PATH=/home/jupyter/.local/share/jupyter
+      - JUPYTER_CONFIG_DIR=/home/jupyter/.jupyter
+      - JUPYTER_DATA_DIR=/home/jupyter/.local/share/jupyter
+      - JUPYTER_RUNTIME_DIR=/tmp/jupyter_runtime
+    user: jupyter
+    command: ["jupyter", "lab", "--ip=0.0.0.0", "--port=8888", "--no-browser", "--NotebookApp.token=''"]
+
+volumes:
+  jupyter-home:
