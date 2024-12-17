@@ -17,20 +17,19 @@ def generate_enhanced_polling_data(num_states, num_polls, candidates):
         'Region': [np.random.choice(list(config.REGIONS.keys())) for _ in range(num_states)]
     })
 ```
-This creates baseline characteristics for each state, including turnout history, urbanization, and income levels.
+Genera datos simulados de características demográficas y geográficas para un conjunto de estados, como participación histórica, población urbana, ingresos y región.
 
-2. **Regional Effects**
+2. **Efectos regionales**
 ```python
     regional_effects = {region: {
         'bias': np.random.normal(0, 3, len(candidates)),  # Regional bias
         'variance': np.random.uniform(0.8, 1.2, len(candidates))  # Regional variance
     } for region in config.REGIONS.keys()}
 ```
-Creates regional variations where:
-- 'bias': How much a region tends to favor certain candidates (±3%)
-- 'variance': How much regional effects vary (0.8x to 1.2x)
 
-3. **Base State Support**
+Asignamos a cada región un sesgo y una varianza específica para cada candidato, generados aleatoriamente. Donde bias representa cuanto cierta región favorece a un candidato y variance cuánto varían los efectos regionales
+
+3. **Apoyo Estatal Base**
 ```python
     state_support = {}
     for state in states:
@@ -43,12 +42,10 @@ Creates regional variations where:
         base = np.clip(base, 25, 75)
         state_support[state] = base
 ```
-Generates underlying true support for each state, incorporating:
-- Base distribution using Dirichlet (ensures sum near 100%)
-- Regional effects
-- Clipping to realistic ranges (25-75%)
 
-4. **Poll Generation**
+Estamos generando y ajustando valores de apoyo para cada candidato en cada estado, teniendo en cuenta tanto una distribución inicial (Dirichlet) como efectos regionales y recortando los valores para que tengan un rango realista(25%-75%).
+
+4. **Generación de Encuestas**
 ```python
     for _ in range(num_polls):
         state = np.random.choice(states)
@@ -59,12 +56,10 @@ Generates underlying true support for each state, incorporating:
         sample_size = int(np.random.triangular(1000, 1500, 2500))
         date = pd.Timestamp.now() - pd.Timedelta(days=np.random.randint(0, 30))
 ```
-For each poll:
-- Randomly select a state
-- Generate realistic sample size (triangular distribution)
-- Set poll date within last 30 days
 
-5. **Poll Noise and Methodology**
+Dado un estado aleatorio, se btiene su región, y se genera una encuesta con un tamaño de muestra aleatorio con distribución triangular (entre 1000 y 2500 con moda 1500) y una fecha aleatoria dentro de los últimos 30 días.
+
+5. **Ruido y Metodología de la Encuesta**
 ```python
         true_support = state_support[state]
         base_noise = 2.0 / np.sqrt(sample_size / 1000)
