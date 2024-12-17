@@ -57,7 +57,7 @@ Estamos generando y ajustando valores de apoyo para cada candidato en cada estad
         date = pd.Timestamp.now() - pd.Timedelta(days=np.random.randint(0, 30))
 ```
 
-Dado un estado aleatorio, se btiene su región, y se genera una encuesta con un tamaño de muestra aleatorio con distribución triangular (entre 1000 y 2500 con moda 1500) y una fecha aleatoria dentro de los últimos 30 días.
+Dado un estado aleatorio, se obtiene su región, y se genera una encuesta con un tamaño de muestra aleatorio con distribución triangular (entre 1000 y 2500 con moda 1500) y una fecha aleatoria dentro de los últimos 30 días.
 
 5. **Ruido y Metodología de la Encuesta**
 ```python
@@ -68,12 +68,10 @@ Dado un estado aleatorio, se btiene su región, y se genera una encuesta con un 
         
         support = true_support + np.random.normal(0, noise_scale, len(candidates))
 ```
-Models polling error where:
-- Base noise decreases with larger sample sizes
-- Better methodology scores (6-10) reduce noise
-- Noise is normally distributed around true support
 
-6. **Demographic Effects**
+Simulamos el apoyo observado en una encuesta sumando ruido al apoyo verdadero, donde el ruido depende del tamaño de muestra (a mayor tamaño, menos ruido) y de la calidad metodológica (las metodologías tienen una puntuación de 6 a 10 y a peor puntuación aumentan el ruido).
+
+6. **Efectos Demograficos**
 ```python
         urban_effect = (state_data['Urban_Population_Pct'] - 70) / 200
         income_effect = (state_data['Median_Income'] - 50000) / 100000
@@ -85,14 +83,10 @@ Models polling error where:
         support = support + np.array([total_effect, -total_effect])
         support = np.clip(support, 20, 80)
 ```
-Adds demographic influences:
-- Urban/rural differences
-- Income effects
-- Turnout patterns
-- Regional scaling of effects
-- Ensures final numbers stay within 20-80%
 
-7. **Final Poll Data**
+Agregamos los efectos demográficos al ajusta del apoyo observado agregando: el ingreso, patrones de participación y el porcentaje de población urbana. Todo esto asegurrandonos que este en un rango creible 
+
+7. **Datos Finales de la Encuesta**
 ```python
         poll_data = {
             "Poll_ID": f"Poll_{np.random.randint(1000, 9999)}",
@@ -107,16 +101,6 @@ Adds demographic influences:
             **{f"{cand}_Support": s for cand, s in zip(candidates, support)}
         }
 ```
-Creates final poll entry with:
-- Unique poll ID
-- All state characteristics
-- Methodology information
-- Final support numbers
 
-This function generates realistic polling data by modeling:
-1. Geographic patterns (state and regional effects)
-2. Demographic influences
-3. Polling methodology quality
-4. Sample size effects
-5. Temporal patterns
-6. Realistic noise and uncertainty
+Para terminar creamos un diccionario con información detallada de una encuesta, incluyendo ID, estado, región, tamaño de muestra, fecha, metodología, participación histórica, características demográficas, ingreso y el apoyo observado para cada candidato.
+
