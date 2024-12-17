@@ -1,6 +1,5 @@
-Let me break down the `generate_enhanced_polling_data` function by its key components:
-
-1. **Initial Setup and State Characteristics**
+Vamos a explicar más a detalle la función  `generate_enhanced_polling_data` 
+1. **Configuración Inicial y Características del Estado**
 ```python
 def generate_enhanced_polling_data(num_states, num_polls, candidates):
     states = [f"State_{i+1}" for i in range(num_states)]
