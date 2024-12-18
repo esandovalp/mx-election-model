@@ -152,12 +152,12 @@ class ElectionSimulation:
 
 ## 5. Cronograma de Implementación
 
-### Fase 1: Fundación (Semanas 1-4)
+### Fase 1: Bases (Semanas 1-4)
 - Configurar el flujo de datos para la recopilación de encuestas
 - Implementar el promedio básico de encuestas
 - Crear instantáneas preliminares por estado
 
-### Phase 2: Fase 2: Mejoras (Semanas 5-8)
+### Fase 2: Mejoras (Semanas 5-8)
 - Integrar indicadores económicos
 - Desarrollar el ajuste por efectos de la encuestadora
 - Construir modelos de referencia demográficos
