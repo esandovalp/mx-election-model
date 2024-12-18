@@ -1,8 +1,8 @@
-# Mexican Election Model Development Roadmap
+# Ruta para el Desarrollo del Modelo Electoral Mexicano
 
-## 1. Polling Data Framework
+## 1. Marco de Datos de Encuestas
 
-### A. Poll Weighting System
+### A. Sistema de Ponderación de Encuestas
 ```
 weight = sample_size_weight * pollster_rating_weight * recency_weight * methodology_weight
 
@@ -13,59 +13,63 @@ where:
 - methodology_weight = based on sampling methodology quality
 ```
 
-### B. Essential Adjustments
+### B. Ajustes Esenciales
 
-1. **Likely Voter Adjustment**
-- Develop Mexico-specific likely voter model based on:
-  - Historical turnout patterns by region
-  - Demographic voting propensity
-  - Current election engagement metrics
-- Calculate adjustment factors using:
+1. **Ajuste para Probables Votantes**
+Desarrollar un modelo específico para votantes probables en México basado en:
+  - Patrones históricos de participación por región
+  - Métricas actuales de interés en la elección
+  - Propensión demográfica al voto
+
+Calcularemos los  factores de ajuste usando:
+
   ```python
+  
   likely_voter_adjustment = base_adjustment * turnout_factor * engagement_metric
   ```
 
-2. **House Effects**
-- Track systematic biases by pollster
-- Calculate using hierarchical model:
-  - State-level house effects
-  - National-level house effects
-  - Allow for different effects by party/candidate
+2. **Efectos de la Encuestadora**
+- Rastrear sesgos sistemáticos por parte de la encuestadora
+- Calcular usando un modelo jerárquico basado en:
+  - Efectos a nivel estatal
+  - Efectos a nivel nacional
+  - Permitiendo distintos efectos por candidato o partido 
 
-3. **Timeline Adjustment**
-- Implement decay function for older polls
-- Weight recent polls more heavily near election day
-- Account for major campaign events
+3. **Ajuste de Línea de Tiempo**
+- Dar mayor peso a encuestas recientes cerca del día de la elección
+- Considerar eventos importantes de la campaña
 
-## 2. Fundamentals Integration
 
-### A. Economic Indicators
-1. Primary Metrics:
-- GDP growth rate
-- Inflation rate
-- Unemployment by state
-- Real wage growth
-- Consumer confidence index
+## 2. Integración de Fundamentos 
 
-2. Calibration:
-- Use historical election results (1994-present)
-- Weight recent economic performance more heavily
-- Account for regional economic disparities
+### A. Indicadores Económicos
+1. Métricas Principales:
+- Tasa de crecimiento del PIB
+- Tasa de inflación
+- Tase de desempleo por estado
+- Crecimiento real de los salarios
+- Índice de confianza del consumido
 
-### B. Demographic Factors
-1. Core Variables:
-- Education levels
-- Urban/rural population
-- Age distribution
-- Income levels
-- Indigenous population percentage
+2. Calibración:
+- Utilizar resultados históricos de elecciones de 1994 al presente
+- Ponderar más el desempeño económico reciente
+- Considerar disparidades económicas regionales
 
-2. Regional Characteristics:
-- State-level partisan lean
-- Historical turnout patterns
-- Voting access metrics
+### B. Factores Demográficos
+1. Variables Principales:
+- Niveles de educación
+- Población urbana/rura
+- Distribución por edad
+- Niveles de ingreso
+- Porcentaje de población indígena
 
-### C. Enhanced Snapshot Creation
+2. Características Regionales:
+- Inclinación partidaria a nivel estatal
+- Patrones históricos de participación
+- Métricas de acceso al voto
+- 
+
+### C. Creación Mejorada de Instantáneas
 ```python
 def create_enhanced_snapshot(state):
     return {
@@ -76,39 +80,39 @@ def create_enhanced_snapshot(state):
     }
 ```
 
-## 3. Uncertainty Quantification
+## 3. Cuantificación de la Incertidumbre
 
-### A. Components
+### A. Componentes
 
-1. **National Drift**
+1. **Desviación Nacional**
 ```python
 national_drift = base_uncertainty * (days_until_election)**(1/3) * uncertainty_index
 ```
 
-2. **Uncertainty Index Variables**
-- Undecided voter percentage
-- Economic volatility metrics
-- News volume/significance
-- Political polarization measures
-- Campaign event impact
+2. **Variables del Índice de Incertidumbre**
+- Porcentaje de votantes indecisos
+- Métricas de volatilidad económica
+- Impacto de las noticias
+- Medidas de polarización política
+- Impacto de eventos de campaña
 
-### B. Error Correlations
+### B. Correlaciones de Error
 
-1. Regional Clusters:
-- North/Border States
-- Central Mexico
-- Southern States
-- Metropolitan Areas
+1. Agrupamientos Regionales:
+- Estados del Norte/Franja Fronteriza
+- Centro de México
+- Sur 
+- Zonas Metropolitanas
 
-2. Demographic Correlations:
-- Urban/Rural splits
-- Income levels
-- Education clusters
-- Indigenous population percentage
+2. Correlaciones Demográficas:
+- Divisiones urbano/rurales
+- Niveles de ingresos
+- Grupos educativos
+- Porcentaje de población indígena
 
-## 4. Simulation Framework
+## 4. Marco de Simulación
 
-### A. Core Simulation Structure
+### A. Estructura de la Simulación
 ```python
 class ElectionSimulation:
     def run_simulation(self, n_simulations=40000):
@@ -135,75 +139,75 @@ class ElectionSimulation:
         return aggregate_results(results)
 ```
 
-### B. State Covariance Modeling
-1. Geographic Factors:
-- Border state effects
-- Regional economic ties
-- Media market overlap
+### B. Modelado de Covarianza Estatal
+1. Factores Geográficos:
+- Efectos en estados fronterizos
+- Vínculos económicos regionales
+- Superposición de mercados mediáticos
 
-2. Demographic Linkages:
-- Urban population centers
-- Indigenous communities
-- Income/education clusters
+2. Vínculos Demográficos:
+- Centros de población urbana
+- Comunidades indígenas
+- Agrupamientos por ingreso/educación
 
-## 5. Implementation Timeline
+## 5. Cronograma de Implementación
 
-### Phase 1: Foundation (Weeks 1-4)
-- Set up data pipeline for poll collection
-- Implement basic poll averaging
-- Create preliminary state snapshots
+### Fase 1: Fundación (Semanas 1-4)
+- Configurar el flujo de datos para la recopilación de encuestas
+- Implementar el promedio básico de encuestas
+- Crear instantáneas preliminares por estado
 
-### Phase 2: Enhancement (Weeks 5-8)
-- Integrate economic indicators
-- Develop house effects adjustment
-- Build demographic baseline models
+### Phase 2: Fase 2: Mejoras (Semanas 5-8)
+- Integrar indicadores económicos
+- Desarrollar el ajuste por efectos de la encuestadora
+- Construir modelos de referencia demográficos
 
-### Phase 3: Simulation (Weeks 9-12)
-- Implement uncertainty quantification
-- Build simulation framework
-- Develop correlation structure
+### Fase 3: Simulación (Semanas 9-12)
+- Implementar incertidumbre
+- Construir el marco de simulación
+- Desarrollar la estructura de correlación
 
-### Phase 4: Validation (Weeks 13-16)
-- Backtest against historical elections
-- Sensitivity analysis
-- Parameter tuning
+### Fase 4: Validación (Semanas 13-16)
+- Realizar pruebas retrospectivas con elecciones históricas
+- Análisis de sensibilidad
+- Ajuste de parámetros
 
-## Critical Considerations
+## Consideraciones Críticas
 
-1. **Mexico-Specific Factors**
-- Multi-party system dynamics
-- Regional party strength
-- Coalition politics
-- State election timing
+1. **Factores Específicos de México**
+- Sistema multipartidista
+- Fortaleza regional de los partidos
+- Coaliciones políticas
+- Cronograma de elecciones estatales
 
-2. **Data Quality Issues**
-- Poll reliability verification
-- Economic data timeliness
-- Regional data availability
-- Historical data consistency
+2. **Problemas de Calidad de Datos**
+- Verificación de la fiabilidad de las encuestas
+- Puntualidad de los datos económicos
+- Disponibilidad de datos regionales
+- Consistencia de los datos históricos
 
-3. **Validation Metrics**
-- Brier score
-- Calibration curves
-- Backtesting framework
-- Uncertainty quantification
+3. **Métricas de Validación**
+- Puntaje Brier
+- Curvas de calibración
+- Marco de pruebas
+- Cuantificación de incertidumbre
 
-## Next Steps
+## Próximos Pasos
 
-1. Immediate Actions:
-- Begin pollster rating database
-- Collect historical election data
-- Set up economic data pipeline
-- Define state clustering structure
+1. Acciones Inmediatas:
+- Iniciar la base de datos de calificación de encuestadoras
+- Recopilar datos históricos de elecciones
+- Configurar el flujo de datos económicos
+- Definir la estructura de agrupamiento estatal
 
-2. Technical Infrastructure:
-- Set up version control
-- Create testing framework
-- Implement logging system
-- Design validation suite
+2. Infraestructura Técnica:
+- Configurar control de versiones
+- Crear un marco de pruebas
+- Implementar un sistema de registro
+- Diseñar un conjunto de validación
 
-3. Documentation Requirements:
-- Methodology documentation
-- Data dictionary
-- Validation reports
-- Update procedures
+3. Requerimientos en la Documentación:
+- Documentación de la metodología
+- Diccionario de datos
+- Informes de validación
+- Atualizar procedimientos 
